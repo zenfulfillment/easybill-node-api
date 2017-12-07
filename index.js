@@ -30,7 +30,7 @@ module.exports = (apiKey) => {
       return _request({url, method: 'GET', qs});
     },
 
-    post(url, body) {
+    post(url, body, {isFile = false} = {}) {
       if (_.isEmpty(url)) {
         return rejectMissingUrl();
       }
@@ -39,16 +39,15 @@ module.exports = (apiKey) => {
         return rejectMissingBody();
       }
 
+      if (isFile) {
+        return _request({url, method: 'POST', formData: body});
+      }
       return _request({url, method: 'POST', body});
     },
 
-    put(url, body) {
+    put(url, body = {}) {
       if (_.isEmpty(url)) {
         return rejectMissingUrl();
-      }
-
-      if (_.isEmpty(body)) {
-        return rejectMissingBody();
       }
 
       return _request({url, method: 'PUT', body});
