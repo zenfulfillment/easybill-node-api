@@ -22,14 +22,14 @@ module.exports = (apiKey) => {
   }
 
   return {
-    get(url, qs = {}, {isFile = false} = {}) {
+    get(url, qs = {}, {isFile = false, resolveWithFullResponse = false} = {}) {
       if (_.isEmpty(url)) {
         return rejectMissingUrl();
       }
 
       const encoding = isFile ? {encoding: null} : {};
 
-      const args = Object.assign({}, {url, method: 'GET', qs}, encoding);
+      const args = Object.assign({}, {url, method: 'GET', qs, resolveWithFullResponse}, encoding);
 
       return _request(args);
     },
